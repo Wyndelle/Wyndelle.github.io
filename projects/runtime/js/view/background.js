@@ -26,27 +26,43 @@ var background = function (window) {
         var background;
         
         // ANIMATION VARIABLES HERE:
-        
+        var cloudy;
      
         // called at the start of game and whenever the page is resized
         // add objects for display in background. draws each image added to the background once
         function render() {
             background.removeAllChildren();
-
+            
             // TODO: 2 - Part 2
             // this fills the background with a obnoxious yellow
             // you should modify this to suit your game
-            var backgroundFill = draw.rect(canvasWidth,canvasHeight,'yellow');
+            var backgroundFill = draw.rect(canvasWidth,canvasHeight,'cadetblue');
             background.addChild(backgroundFill);
             
             // TODO: 3 - Add a moon and starfield
-            
+            // var sun = draw.bitmap('img/light.png');
+            // sun.x = 500;
+            // sun.y = -300;
+            // sun.scaleX = .8;
+            // sun.scaleY = .8;
+            // background.addChild(sun);
+            // var cloud = draw.bitmap('img/clouds.png');
+            // cloud.x = 15;
+            // cloud.y = -700;
+            // cloud.scaleX = .8;
+            // cloud.scaleY = .8;
+            // background.addChild(cloud);
+
+
             
             // TODO: 5 - Add buildings!     Q: This is before TODO 4 for a reason! Why?
             
             
             // TODO 4: Part 1 - Add a tree
-            
+            cloudy = draw.bitmap('img/cloudss.png');
+            cloudy.x = 400;
+            cloudy.y = 0;
+            background.addChild(cloudy);
             
         } // end of render function - DO NOT DELETE
         
