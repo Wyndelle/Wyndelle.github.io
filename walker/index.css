@@ -1,18 +1,18 @@
 
 body {
-  background-color: darkgreen;
+  background-color: rgb(161, 103, 16);
 }
 
 #board {
   width: 440px;
   height: 440px;
-  border: 1px solid white;
+  border: 1px solid grey;
   background-color: black;
   position: relative;
 }
 
 #gameItem {
-  background-color: teal;
+  background-color: rgb(211, 135, 73);
   width: 50px;
   height: 50px;
   position: absolute;
