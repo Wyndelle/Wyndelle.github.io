@@ -153,8 +153,8 @@ function score(id) {
       }
 
         //right paddle
-         if (rightPaddle.Y > BOARD_HEIGHT -  30) {
-             rightPaddle.Y = BOARD_HEIGHT -  30
+         if (rightPaddle.Y > BOARD_HEIGHT -  rightPaddle.Y) {
+             rightPaddle.Y = BOARD_HEIGHT -  rightPaddle.Y
       }
 
       else if (rightPaddle.Y < 20 ){
@@ -166,10 +166,16 @@ function score(id) {
             ball.speedY = -ball.speedY;  
       }
 
-        if (ball.X > 990|| ball.X < 300) {
+        if (ball.X > 990) {
             ball.speedX = -ball.speedX;  
-             $("#player1").text("player two score:"  + player1.points + 1);
+             $("#player1").text("player one score:"  + player1.points ++);
       }
+
+      if (ball.X < 300) {
+            ball.speedX = -ball.speedX;  
+             $("#player2").text("player two score:"  + player2.points ++);
+      }
+
 
       
   }
