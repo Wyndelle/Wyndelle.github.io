@@ -1,12 +1,32 @@
 /* global $, sessionStorage */
 
 $(document).ready(runProgram) // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
-                             // I want the game to also start when the space bar is pressed
+                             
 function runProgram(){
 
   ////////////////////////////////////////////////////////////////////////////////
   //////////////////////////// SETUP /////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
+
+//welcoming function, to let my players know the rules of this game 
+  function welcomePlayers(){
+    alert("welcome to my pong game!");
+   player1name = prompt("whats your name player one?");
+   player2name = prompt("whats your name player two?")
+    alert("nice to meet you " + player1name + " and " + player2name)
+    alert("my name is wyndelle, but you can call me anytime")
+    alert("that was pretty bad, forget I said that. nice to meet you " + player1name + " and " + player2name)
+    alert("this is a fun multiplayer game of pong. the rules of this game are pretty simple") 
+    alert("player one uses the w and s keys to move up and down and hit the ball")
+    alert("player two uses the up and down arrow keys to move and hit the ball")
+    alert("don't let your opponent knock the ball behind you, or else they win a point!")
+    alert("first person to 5 points, wins the game and is titled, ping pong ding dong")
+    var answer = prompt("do you think you'll win " + player1name + " or " + player2name)
+    alert("im actually rooting for the other player, sorry bud. I just like his vibe better.")
+    prompt("need anything else before going on?")
+    alert("great, didn't think so, have fun!")
+}
+welcomePlayers(); 
 
   // Constant Variables
   var FRAME_RATE = 60;
@@ -25,9 +45,9 @@ function runProgram(){
 
 
   // Game Item Objects
-var ball =        gameItem( 300, 290, "#ball", 5, 5);
-var leftPaddle =  gameItem(340,  30, "#leftPaddle", 0, 0,);
-var rightPaddle = gameItem(930,  30, "#rightPaddle", 0, 0);
+var ball =        gameItem( 300, 290, "#ball", 5, 5, 30, 30,);
+var leftPaddle =  gameItem(340,  30, "#leftPaddle", 0, 0, 200, 50);
+var rightPaddle = gameItem(930,  30, "#rightPaddle", 0, 0, 200, 50);
 
 
 //score tracker for both players
@@ -39,9 +59,7 @@ var player2 = score("#player2");
   $(document).on('keydown', handleKeyDown);                           // change 'eventType' to the type of event you want to handle
   $(document).on('keyup', handleKeyUp);
 
-  function changePlayer1Text(newText) {
-			player1.text(newText);
-			}
+
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -52,12 +70,15 @@ var player2 = score("#player2");
   by calling this function and executing the code inside.
   */
   function newFrame() {
-      //update position
+      
+    //update position
     repositionLeftPaddle();
     repositionRightPaddle();
      repositionBall();
      //check for collisions
      checkForBorderCollision();
+     doCollide(leftPaddle, ball);
+     doCollide(rightPaddle, ball);
   }
   
   /* 
@@ -87,13 +108,15 @@ changeSpeedY1(0, event.which, KEY.S); //lift the key up ---> speed stops for lef
 
 
 
- function gameItem(X, Y, id, speedY, speedX) {
+ function gameItem(X, Y, id, speedY, speedX, height, width) {
   var gameItem = {};
   gameItem.X = X;
   gameItem.Y = Y;
   gameItem.id = id;
   gameItem.speedY = speedY;
   gameItem.speedX = speedX;
+  gameItem.height = height;
+  gameItem.Width = width;
   
 
   return gameItem;
@@ -103,7 +126,7 @@ function score(id) {
 
   var score = {};
   score.id = id;
-  score.points = 0;
+  score.points = 1;
 
   return score;
 }
@@ -144,8 +167,8 @@ function score(id) {
   
   function checkForBorderCollision(){
       //left paddle
-      if (leftPaddle.Y > BOARD_HEIGHT - leftPaddle.Y) {
-          leftPaddle.Y = BOARD_HEIGHT - leftPaddle.Y
+      if (leftPaddle.Y > BOARD_HEIGHT - leftPaddle.height + 20) {
+          leftPaddle.Y = BOARD_HEIGHT - leftPaddle.height + 20;
       }
 
       else if (leftPaddle.Y < 20 ){
@@ -153,8 +176,8 @@ function score(id) {
       }
 
         //right paddle
-         if (rightPaddle.Y > BOARD_HEIGHT -  rightPaddle.Y) {
-             rightPaddle.Y = BOARD_HEIGHT -  rightPaddle.Y
+         if (rightPaddle.Y > BOARD_HEIGHT -  rightPaddle.height + 20) {
+             rightPaddle.Y = BOARD_HEIGHT -  rightPaddle.height + 20
       }
 
       else if (rightPaddle.Y < 20 ){
@@ -162,70 +185,62 @@ function score(id) {
       }
       
       //ball (non scoring walls)
-       if (ball.Y > BOARD_HEIGHT || ball.Y < 20) {
+       if (ball.Y > BOARD_HEIGHT || ball.Y < 10) {
             ball.speedY = -ball.speedY;  
       }
-
+        //if ball hits the right wall, award a point
         if (ball.X > 990) {
-            ball.speedX = -ball.speedX;  
+          ball.X = 500 ;  
              $("#player1").text("player one score:"  + player1.points ++);
+             
       }
-
+        //if ball hits left wall, award a point
       if (ball.X < 300) {
-            ball.speedX = -ball.speedX;  
+           ball.X = 500 
              $("#player2").text("player two score:"  + player2.points ++);
       }
-
-
-      
+gameWinner()
   }
 
-//   function checkPointCollision() {
-    
-//     if (pointCollision("#rightPaddle", "#leftPaddle", ball)) {
-//         showResult(true);
-//     } else {
-//         showResult(false);
-//     }
-// }
+//checks for ball paddle colliions
 
-//   function pointCollision(playerTwo, playerOne, bouncyBall) {
+function doCollide(obj1, obj2) {
    
-//    playerTwo.leftX = playerTwo.x;
-//    playerTwo.topY = playerTwo.y;
-//    playerTwo.rightX = playerTwo.x + 30;
-//    playerTwo.bottomY = playerTwo.y + 30;
+    obj1.leftX = obj1.X;
+    obj1.topY = obj1.Y;
+    obj1.rightX = obj1.X + 50;
+    obj1.bottomY = obj1.Y + 200;
     
-//     playerOne.leftX = playerOne.x;
-//     playerOne.topY = playerOne.y;
-//     playerOne.rightX = playerOne.x + 30;
-//     playerOne.bottomY = playerOne.y + 30;
-
-//     bouncyBall.leftX = bouncyBall.x;
-//     bouncyBall.topY = bouncyBall.y;
-//     bouncyBall.rightX = bouncyBall.x + 30 ;
-//     bouncyBall.bottomY = bouncyBall.y + 30 ;
+  obj2.leftX = obj2.X;
+    obj2.topY = obj2.Y;
+  obj2.rightX = obj2.X + 30;
+    obj2.bottomY = obj2.Y + 30;
     
-// 	if (bouncyBall.rightX > playerOne.leftX &&
-//        bouncyBall.leftX < playerOne.rightX  &&
+	if (obj1.rightX > obj2.leftX &&
+       obj1.leftX < obj2.rightX &&
+       obj1.bottomY > obj2.topY &&
+       obj1.topY < obj2.bottomY) {
+    
+        obj2.speedX = -obj2.speedX;
+        
+    }
+		
+}
 
-//        bouncyBall.bottomY > playerOne.topY &&
-//        bouncyBall.topY < playerOne.bottomY) {
-//       console.log("true");
-//     }
-// 		else {
-//          console.log( "false");
-//         }
-// }
+function gameWinner(){
+    if (player1.points === 6){
+        alert("congrats " + player1name + "i always liked you better. you are the official ping pong ding dong.");
+            endGame();
+    }
 
-// function showResult(result) {
-//    
-// }
-
+    if (player2.points === 6){
+        alert("wohoo! I always knew you could do it. You were always my favorite " + player2name)
+        endGame();
+    }
+}
 
 
 
-  
   function endGame() {
     // stop the interval timer
     clearInterval(interval);
@@ -233,5 +248,6 @@ function score(id) {
     // turn off event handlers
     $(document).off();
   }
-  
+
+
 }
