@@ -22,7 +22,7 @@ var background = function (window) {
         var canvasHeight = app.canvas.height;
         var groundY = ground.y;
         
-        // container which will be returned
+        // container which will be returnedr55
         var background;
         
         // ANIMATION VARIABLES HERE:

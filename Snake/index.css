@@ -1,0 +1,46 @@
+
+body {
+  background-color: rgb(46, 107, 185);
+}
+
+#board {
+  width: 440px;
+  height: 440px;
+  border: 5px solid rgb(4, 28, 80);
+  background-color: rgb(8, 40, 110);
+  position: relative;
+  left: 450px;
+  top: 50px;
+}
+
+#apple {
+  background-color: rgb(199, 44, 44);
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 100px; 
+  top: 100px; 
+}
+
+#head {
+  background-color: rgb(25, 161, 214);
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 150px; 
+  top: 100px; 
+}
+
+#score {
+    border: 5px solid rgb(4, 28, 80);
+    background-color: rgb(12, 19, 58);
+  width: 440px;
+  height: 50px;
+  position: absolute;
+   left: 458px; 
+   top: 490px;  
+  font-size: 200%;
+  text-align: center;
+  color: rgb(23, 111, 161);
+}
+

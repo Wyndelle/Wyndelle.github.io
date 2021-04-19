@@ -34,6 +34,7 @@ welcomePlayers();
 
   //removing magic numbers for readability
   var KEY = {
+
       "UP": 38,        //player two controls
       "DOWN": 40,     //player two controls 
       "W": 87,       //player one controls 
