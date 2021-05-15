@@ -58,10 +58,10 @@ function reddify(array){
 };
 
 function decreaseBlue(blueArr){
-    blueArr[BLUE] = Math.max(blueArr[BLUE] - 30);
+    blueArr[BLUE] = Math.max(blueArr[BLUE] - 30, 0);
 };
 
 function increaseGreenByBlue(greenArr){
-    greenArr[GREEN] = Math.min(greenArr[BLUE] + greenArr[GREEN]);
+    greenArr[GREEN] = Math.min(greenArr[BLUE] + greenArr[GREEN], 255);
 };
 // CHALLENGE code goes below here
